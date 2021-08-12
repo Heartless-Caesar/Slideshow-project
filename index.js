@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {useState, useContext} from 'react';
+import {useState, useEffect, useContext} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {data} from './data';
 import './index.css'
@@ -11,6 +11,16 @@ const DataContext = React.createContext();
 const Index = () => {
     const [concepts, setConcepts] = useState(data);
     const [index, setIndex] = useState(0);
+
+    useEffect(()=>{
+        const lastIndex = concepts.length - 1;
+        if(index < 0){
+            setIndex(lastIndex);
+        }
+        if(index > lastIndex){
+            setIndex(0)
+        }
+    },[index, concepts])
 
     return(
         <DataContext.Provider value={{concepts, index, setIndex}}>
