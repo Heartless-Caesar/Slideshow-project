@@ -1,0 +1,2 @@
+# Slideshow-project
+Basic slider
