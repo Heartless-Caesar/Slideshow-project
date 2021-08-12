@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {data} from './data';
 import './index.css'
 
+//Context variable
 const DataContext = React.createContext();
 
 
@@ -12,6 +13,7 @@ const Index = () => {
     const [concepts, setConcepts] = useState(data);
     const [index, setIndex] = useState(0);
 
+    //Slide element updater
     useEffect(()=>{
         const lastIndex = concepts.length - 1;
         if(index < 0){
@@ -22,6 +24,11 @@ const Index = () => {
         }
     },[index, concepts])
 
+    //Slide auto-updater
+    useEffect(()=>{
+    let updater = setInterval(()=>{setIndex(index + 1)},3000)
+    return () => clearInterval(updater)},[index])
+
     return(
         <DataContext.Provider value={{concepts, index, setIndex}}>
           <Content/>
@@ -29,6 +36,7 @@ const Index = () => {
     )
 }
 
+//Main content
 const Content = () => {
     const {concepts, index, setIndex} = useContext(DataContext)
 
@@ -54,7 +62,7 @@ const Content = () => {
                 </article>)
                })
            }
-           <button className="prev" type="button" onClick={()=> setIndex(index -1 )}><i className="fas fa-chevron-left"></i></button>
+           <button className="prev" type="button" onClick={()=> setIndex(index - 1)}><i className="fas fa-chevron-left"></i></button>
            <button className="next" type="button" onClick={()=> setIndex(index + 1)}><i className="fas fa-chevron-right"></i></button>
           </div>
          </section>
